@@ -10,5 +10,13 @@ def build_and_predict(train_data, test_data):
   features = train_data.drop(columns = ['summary_date'])
   
   rf.fit(features, labels)
+  
+  predictions = rf.predict(test_data)
+  
+  out = pd.concat([pd.Series(predictions), y_test], axis=1)
+
+  out.to_csv("predictions")
+
+  return out
    
-  return rf.predict(test_data)
+  
