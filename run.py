@@ -5,7 +5,7 @@ import json
 sys.path.insert(0, 'src')
 
 import env_setup
-from etl import get_data
+from etl import get_data, read_test
 from features import apply_features
 
 from model import model_build
@@ -20,11 +20,10 @@ def main(targets):
     env_setup.auth()
 
     if 'test' in targets:
-        with open('config/data-params.json') as fh:
-            data_cfg = json.load(fh)
-
-        # make the data target
-        data = get_data(**data_cfg)
+        train_data = get_data("data")
+        test_data = read_test("data")
+        
+        
 
     return
 
