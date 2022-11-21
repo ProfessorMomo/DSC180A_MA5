@@ -13,9 +13,9 @@ def build_and_predict(train_data, test_data):
   
   predictions = rf.predict(test_data)
   
-  out = pd.concat([pd.Series(predictions), y_test], axis=1)
+  out = pd.DataFrame(pd.Series(predictions))
 
-  out.to_csv("predictions")
+  out.to_csv('test/predictions.csv')
 
   return out
    

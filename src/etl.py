@@ -1,6 +1,8 @@
 import os
+import sys
 import pandas as pd
 from sklearn.impute import SimpleImputer
+import numpy as np
 
 def get_data(datadir):
     '''
@@ -27,5 +29,14 @@ def read_test(datadir):
     '''
 
     fp = os.path.join(datadir, 'test.csv')
-    return pd.read_csv(fp)
+
+    data = pd.read_csv(fp)
+    data = data.drop(columns = ['timestamp', 'hypnogram_5min', 'summary_date', 'rmssd', 'type'])
+    data_cols = data.columns
+    imp_mean = SimpleImputer(missing_values=np.nan, strategy='mean')
+    imp_mean.fit(data)
+    data = imp_mean.transform(data)
+    data = pd.DataFrame(data, columns = data_cols)
+
+    return data
     
